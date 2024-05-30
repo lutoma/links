@@ -3,12 +3,12 @@ body {
 	flex-direction: column;
 	align-items: center;
 	font-family: sans-serif, system-ui;
+	padding: 0 0.5rem;
 }
 
 main {
 	width: 100%;
 	max-width: 900px;
-	margin: 0 2rem;
 }
 
 h1 {
@@ -25,7 +25,6 @@ ul li {
 	display: flex;
 	flex-direction: column;
 	gap: .3rem;
-	flex-shrink: 0;
 }
 
 ul li a {
@@ -42,6 +41,12 @@ ul.lists {
 ul.lists li {
 	width: 50%;
 	margin-bottom: 1rem;
+}
+
+@media (max-width: 800px) {
+	ul.lists li {
+		width: 100%;
+	}
 }
 
 .claim {
