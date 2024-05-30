@@ -10,10 +10,10 @@ CREATE EXTENSION citext;
 CREATE TABLE lists (
 	id SERIAL PRIMARY KEY,
 	slug CITEXT NOT NULL,
+	name TEXT NOT NULL,
 	parent_id INTEGER REFERENCES lists(id),
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	title TEXT NOT NULL,
 	description TEXT
 );
 

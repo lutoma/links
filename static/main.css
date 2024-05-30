@@ -2,26 +2,29 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	font-family: system-ui;
+	font-family: sans-serif, system-ui;
 }
 
 main {
 	width: 100%;
 	max-width: 900px;
+	margin: 0 2rem;
 }
 
 h1 {
 	font-weight: 800;
 }
 
-ul li div {
+ul {
+	padding: 0;
+	list-style-type: none;
+}
+
+ul li {
 	margin-bottom: .5rem;
 	display: flex;
 	flex-direction: column;
 	gap: .3rem;
-}
-
-ul li div {
 	flex-shrink: 0;
 }
 
@@ -29,6 +32,22 @@ ul li a {
 	font-size: 1.2rem;
 }
 
-.index-list {
-	margin-top: 2rem;
+ul.lists {
+	display: flex;
+	flex-direction: row;
+
+}
+
+ul.lists li {
+	width: 50%;
+}
+
+.claim {
+	width: 100%;
+	text-wrap: balance;
+	margin-bottom: 3rem;
+}
+
+.breadcrumbs {
+	font-size: .85rem;
 }

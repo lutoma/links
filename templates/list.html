@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+	<a href="/">/</a>
+	{% for link in breadcrumbs %}
+		› <a href="/{{ link.0 }}">{{ link.1 }}</a>
+	{% endfor %}
+</nav>
 <h1>{{ list.name }}</h1>
+<small>Last update: {{ list.updated_at.strftime('%Y-%m-%d') }}</small>
 
 {% include "_lists.html" %}
 {% endblock %}
