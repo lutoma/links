@@ -24,7 +24,6 @@ async def get_list(slug: str, db_connection: Connection) -> Template:
 	slug_parts = slug.split('/')
 	breadcrumbs = []
 	for i in range(1, len(slug_parts)):
-		print(i)
 		breadcrumbs.append(['/'.join(slug_parts[1:i+1]), slug_parts[i]])
 
 	return Template(template_name="list.html", context={

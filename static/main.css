@@ -35,11 +35,13 @@ ul li a {
 ul.lists {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 
 }
 
 ul.lists li {
 	width: 50%;
+	margin-bottom: 1rem;
 }
 
 .claim {
