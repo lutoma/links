@@ -1,0 +1,20 @@
+{% if children %}
+<ul>
+	{% for list in children %}
+		<li><div><a href="/{{ list.slug }}">{{ list.name }}</a></div></li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if links %}
+<ul>
+	{% for link in links %}
+	<li><div>
+		<a href="{{ link.url }}" rel=noopener>{{ link.title or link.url }}</a> <small>({{ link.domain }})</small>
+		{% if link.description %}
+			<small>{{ link.description }}</small>
+		{% endif %}
+	</div></li>
+	{% endfor %}
+</ul>
+{% endif %}
