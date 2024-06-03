@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{{ meta.name }}{% endblock %}
+
 {% block content %}
 <nav class="breadcrumbs" aria-label="Breadcrumbs">
 	<a href="/">/</a>
@@ -7,8 +9,13 @@
 		› <a href="/{{ link.0 }}">{{ link.1 }}</a>
 	{% endfor %}
 </nav>
-<h1>{{ list.name }}</h1>
-<small>Last update: {{ list.updated_at.strftime('%Y-%m-%d') }}</small>
+<h1>{{ meta.name }}</h1>
+
+{% if meta.description %}
+	<p>{{ meta.description }}</p>
+{% endif %}
+
+<small>Last update: {{ meta.updated_at.strftime('%Y-%m-%d') }}</small>
 
 {% include "_lists.html" %}
 {% endblock %}

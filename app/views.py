@@ -7,22 +7,40 @@ from asyncpg import Connection
 class ViewsController(Controller):
 	path = "/"
 
-	#@get(cache=120)
-	@get()
+	@get(cache=300)
 	async def index(self, db_connection: Connection) -> Template:
-		lists = await db_connection.fetch("SELECT slug, name, description FROM lists WHERE parent_id IS NULL")
+		lists = await db_connection.fetch("""
+			SELECT slug, name, description
+			FROM lists
+			WHERE parent_id IS NULL
+			ORDER BY name
+		""")
 		return Template(template_name="index.html", context={"lists": lists})
 
 
-	#@get("{slug:path}", cache=120)
-	@get("{slug:path}")
+	@get("{slug:path}", cache=300)
 	async def get_list(self, slug: str, db_connection: Connection) -> Template:
-		meta = await db_connection.fetchrow("SELECT id, name, description, updated_at FROM lists WHERE slug=$1", slug[1:])
+		meta = await db_connection.fetchrow("""
+			SELECT id, name, description, updated_at
+			FROM lists
+			WHERE slug=$1
+		""", slug[1:])
 		if not meta:
 			raise NotFoundException
 
-		links = await db_connection.fetch("SELECT title, url, domain FROM links WHERE list_id=$1", meta['id'])
-		lists = await db_connection.fetch("SELECT slug, name, description FROM lists WHERE parent_id=$1", meta['id'])
+		links = await db_connection.fetch("""
+			SELECT title, url, domain, description
+			FROM links
+			WHERE list_id=$1
+			ORDER BY created_at
+		""", meta['id'])
+
+		lists = await db_connection.fetch("""
+			SELECT slug, name, description
+			FROM lists
+			WHERE parent_id=$1
+			ORDER BY name
+		""", meta['id'])
 
 		slug_parts = slug.split('/')
 		breadcrumbs = []
@@ -30,7 +48,7 @@ class ViewsController(Controller):
 			breadcrumbs.append(['/'.join(slug_parts[1:i+1]), slug_parts[i]])
 
 		return Template(template_name="list.html", context={
-			"list": meta,
+			"meta": meta,
 			"links": links,
 			"lists": lists,
 			"breadcrumbs": breadcrumbs,

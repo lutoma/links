@@ -3,6 +3,9 @@
 	{% for list in lists %}
 		<li>
 			<a href="/{{ list.slug }}">{{ list.name }}</a>
+			{% if list.description %}
+				<p>{{ list.description }}</p>
+			{% endif %}
 		</li>
 	{% endfor %}
 </ul>
@@ -12,9 +15,14 @@
 <ul>
 	{% for link in links %}
 	<li>
-		<a href="{{ link.url }}" rel=noopener>{{ link.title or link.url }}</a> <small>({{ link.domain }})</small>
+		<div>
+			<a href="{{ link.url }}" rel=noopener>{{ link.title or link.url }}</a>
+			{% if link.title != link.domain %}
+				<small>({{ link.domain }})</small>
+			{% endif %}
+		</div>
 		{% if link.description %}
-			<small>{{ link.description }}</small>
+			<p>{{ link.description }}</p>
 		{% endif %}
 	</li>
 	{% endfor %}
