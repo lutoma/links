@@ -7,6 +7,7 @@ from litestar.exceptions import HTTPException
 from litestar.template.config import TemplateConfig
 from litestar_asyncpg import AsyncpgConfig, AsyncpgPlugin, PoolConfig
 from litestar.static_files import create_static_files_router
+from litestar.datastructures import CacheControlHeader
 
 from .views import ViewsController
 from .api import APIController
@@ -23,12 +24,18 @@ def plain_text_exception_handler(_: Request, exc: Exception) -> Response:
 asyncpg = AsyncpgPlugin(config=AsyncpgConfig(
 	pool_config=PoolConfig(dsn=environ["LINKS_DB"])))
 
+static_router = create_static_files_router(
+	path="/static",
+	directories=["static"],
+	cache_control=CacheControlHeader(public=True, max_age=3600),
+)
+
 app = Litestar(
 	plugins=[asyncpg],
 	route_handlers=[
 		ViewsController,
 		APIController,
-		create_static_files_router(path="/static", directories=["static"]),
+		static_router,
 	],
 	exception_handlers={HTTPException: plain_text_exception_handler},
 	template_config=TemplateConfig(
