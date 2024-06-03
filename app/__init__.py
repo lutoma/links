@@ -8,7 +8,8 @@ from litestar.template.config import TemplateConfig
 from litestar_asyncpg import AsyncpgConfig, AsyncpgPlugin, PoolConfig
 from litestar.static_files import create_static_files_router
 
-from views import index, get_list
+from .views import ViewsController
+from .api import APIController
 
 
 def plain_text_exception_handler(_: Request, exc: Exception) -> Response:
@@ -25,8 +26,8 @@ asyncpg = AsyncpgPlugin(config=AsyncpgConfig(
 app = Litestar(
 	plugins=[asyncpg],
 	route_handlers=[
-		index,
-		get_list,
+		ViewsController,
+		APIController,
 		create_static_files_router(path="/static", directories=["static"]),
 	],
 	exception_handlers={HTTPException: plain_text_exception_handler},

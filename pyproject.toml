@@ -5,13 +5,28 @@ description = ""
 authors = ["Lukas Martini <hello@lutoma.org>"]
 readme = "README.md"
 
+packages = [
+    {include = "app"}
+]
+
 [tool.poetry.dependencies]
 python = "^3.12"
 litestar = {extras = ["standard"], version = "^2.8.3"}
 asyncpg = "^0.29.0"
 litestar-asyncpg = "^0.2.0"
-
+pydantic = "^2.7.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "tab"
